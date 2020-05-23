@@ -15,6 +15,7 @@ public class BinaryNode {
     private BinaryNode left;
     private BinaryNode right;
     private boolean ChildPosition;
+    
 
     public BinaryNode(int data) {
         setData(data);

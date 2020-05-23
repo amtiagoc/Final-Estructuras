@@ -16,7 +16,7 @@ import java.util.Arrays;
  */
 public class frmGrafo extends javax.swing.JFrame {
 
-    int x = 360, y = 400;
+    int x = 220, y = 15;
 
     /**
      * Creates new form frmGrafo
@@ -46,6 +46,7 @@ public class frmGrafo extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -89,12 +90,21 @@ public class frmGrafo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Graphics g = this.getGraphics();
+        int i = 1;
         for (String string : lista(jTextField1.getText())) {
-            g.drawOval(Integer.parseInt(string), 30, 30, 30);
-            g.drawString(String.valueOf(string), x + 10, 50);
-            g.drawLine(x, 90, x + 90, 30);
-            g.drawLine(x + 20, 50, x + 90, 50);
-            x += 160;
+            i++;
+            y += 35;
+            if (i % 2 == 0) {
+                x += 35;
+                g.drawLine(x + 5, y + 25, x - 10, y + 40); //Linea hacia hijo izq
+
+            } else {
+                x -= 35;
+                g.drawLine(x + 25, y + 25, x + 40, y + 40); //Linea hacia hijo derecho
+            }
+            g.drawOval(x, y, 30, 30); //Ovalo
+            g.drawString(String.valueOf(string), x + 10, y + 20); //String
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
