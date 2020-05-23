@@ -80,8 +80,8 @@ public class frmGrafo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Graphics g = this.getGraphics();
-        g.drawOval(Integer.parseInt(jTextField1.toString()),30, 30, 30);
-        g.drawString(String.valueOf(x),x+10,50);
+        g.drawOval(30 ,30, 30, 30);
+        g.drawString(String.valueOf(jTextField1.getText()),40,50);
         g.drawLine(x, 90, x+90, 30);
         g.drawLine(x+20, 50, x+90, 50);
         x+=160;
