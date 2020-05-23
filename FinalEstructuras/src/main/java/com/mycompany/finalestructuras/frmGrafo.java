@@ -5,21 +5,30 @@ package com.mycompany.finalestructuras;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author samaniw
  */
 public class frmGrafo extends javax.swing.JFrame {
-    int x=360,y=400;
+
+    int x = 360, y = 400;
+
     /**
      * Creates new form frmGrafo
      */
     public frmGrafo() {
         initComponents();
+    }
+
+    private ArrayList<String> lista(String TotalElements) {
+
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(TotalElements.split(",")));
+        return list;
     }
 
     /**
@@ -80,12 +89,13 @@ public class frmGrafo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Graphics g = this.getGraphics();
-        g.drawOval(30 ,30, 30, 30);
-        g.drawString(String.valueOf(jTextField1.getText()),40,50);
-        g.drawLine(x, 90, x+90, 30);
-        g.drawLine(x+20, 50, x+90, 50);
-        x+=160;
-                
+        for (String string : lista(jTextField1.getText())) {
+            g.drawOval(Integer.parseInt(string), 30, 30, 30);
+            g.drawString(String.valueOf(string), x + 10, 50);
+            g.drawLine(x, 90, x + 90, 30);
+            g.drawLine(x + 20, 50, x + 90, 50);
+            x += 160;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
