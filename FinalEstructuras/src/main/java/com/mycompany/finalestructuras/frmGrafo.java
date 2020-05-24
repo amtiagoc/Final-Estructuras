@@ -38,21 +38,18 @@ public class frmGrafo extends javax.swing.JFrame {
     private void drawLeft() {
         Graphics g = this.getGraphics();
         g.drawLine(x + 5, y - 35, x - 10, y - 20);//Linea hacia hijo izquierdo
-        g.setColor(Color.red);
     }
 
     private void drawRight() {
         Graphics g = this.getGraphics();
         x += 10;
         g.drawLine(x + 15, y + 60, x + 40, y + 30); //Linea hacia hijo derecho
-        g.setColor(Color.red);
     }
 
     private void drawOval(String string, int X, int Y) {
         Graphics g = this.getGraphics();
         g.drawOval(X, Y, 30, 30); //Ovalo
         g.drawString(String.valueOf(string), X + 10, Y + 20); //String
-        g.setColor(Color.red);
     }
 
     /**
@@ -68,6 +65,7 @@ public class frmGrafo extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -86,15 +84,24 @@ public class frmGrafo extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(172, Short.MAX_VALUE)
+                .addContainerGap(89, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -109,7 +116,8 @@ public class frmGrafo extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
                 .addGap(27, 27, 27))
         );
 
@@ -122,11 +130,20 @@ public class frmGrafo extends javax.swing.JFrame {
             bst = new BinarySearchTree();
             initialized = true;
         }
+
         Graphics g = this.getGraphics();
-        g.setColor(Color.black);
         int i = 1;
         for (String string : lista(jTextField1.getText())) {
-            
+            /* i++;
+            y += 35;
+            if (i % 2 == 0) {
+                drawLeft(g, i == 2, string);
+
+            } else {
+                drawRight(g, i == 2);
+            }
+
+            drawOval(string, x, y);*/
             bst.Add(Integer.valueOf(string));
         }
         nodes = bst.InOrden();
@@ -135,27 +152,34 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-//        bst.Delete(Integer.parseInt(jTextField2.getText()));
-//        nodes = bst.InOrden();
-//        if (!initialized) {
-//            bst = new BinarySearchTree();
-//            initialized = true;
-//        }
-////        for (BinaryNode string : nodes) {
-////            bst.Add(string.getData());
-////        }
-//        //nodes = bst.InOrden();
-//        drawNodes();
+        bst.Delete(Integer.parseInt(jTextField2.getText()));
+        nodes = bst.InOrden();
+        if (!initialized) {
+            bst = new BinarySearchTree();
+            initialized = true;
+        }
+        Graphics g = this.getGraphics();
+        int i = 1;
+        for (BinaryNode string : nodes) {
+            bst.Add(string.getData());
+        }
+        nodes = bst.InOrden();
+        drawNodes();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Graphics g = this.getGraphics();
+        super.paintComponents(g);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     void drawNodes() {
         for (BinaryNode node : nodes) {
             drawOval(String.valueOf(node.getData()), node.getX(), node.getY());
-//            if (node.getLeft() != null) {
-//                drawLeft();
-//            } else {
-//                drawRight();
-//            }
+            if (node.getLeft() != null) {
+                drawLeft();
+            } else {
+                drawRight();
+            }
         }
     }
 
@@ -197,6 +221,7 @@ public class frmGrafo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
