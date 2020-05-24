@@ -5,12 +5,16 @@
  */
 package com.mycompany.finalestructuras;
 
+import java.awt.Graphics;
+import java.util.ArrayList;
+
 /**
  *
  * @author samaniw
  */
-public class BinarySearchTree {
+public class BinarySearchTree extends frmGrafo {
 
+    ArrayList<BinaryNode> list = new ArrayList<>();
     private BinaryNode root;
     private BinaryNode father;
     private boolean position;
@@ -28,11 +32,12 @@ public class BinarySearchTree {
     }
 
     //Punto 1
-    public void InOrden() {
+    public ArrayList<BinaryNode> InOrden() {
         leafs = 0;
         //identificar desde qué método se ha llamado a InOrden
         String method = Thread.currentThread().getStackTrace()[2].getMethodName();
         InOrden(root, method);
+        return list;
     }
 
     private void InOrden(BinaryNode currentRoot, String m) {
@@ -42,6 +47,7 @@ public class BinarySearchTree {
                 leafs++;
             } else {
                 InOrden(currentRoot.getLeft(), m);
+                list.add(currentRoot);
                 System.out.print(currentRoot.getData() + " ");
                 InOrden(currentRoot.getRight(), m);
             }
@@ -88,26 +94,26 @@ public class BinarySearchTree {
 
     public void Add(int data) {
         if (root == null) {
-            root = new BinaryNode(data);
+            root = new BinaryNode(data, 220, 15);
         } else //validar si el dato ya existe
-         if (Search(data) != null) {
-                System.out.println("Dato repetido, no se puede insertar");
-            } else {
-                Add(data, root);
-            }
+        if (Search(data) != null) {
+            System.out.println("Dato repetido, no se puede insertar");
+        } else {
+            Add(data, root);
+        }
         nodes++;
     }
 
     private void Add(int data, BinaryNode currentRoot) {
         if (data < currentRoot.getData()) {
             if (currentRoot.getLeft() == null) {
-                currentRoot.setLeft(new BinaryNode(data));
+                currentRoot.setLeft(new BinaryNode(data, currentRoot.getX() + 35, currentRoot.getY() + 35));
             } else {
                 Add(data, currentRoot.getLeft());
             }
 
         } else if (currentRoot.getRight() == null) {
-            currentRoot.setRight(new BinaryNode(data));
+            currentRoot.setRight(new BinaryNode(data, currentRoot.getX() - 35, currentRoot.getY() + 35));
         } else {
             Add(data, currentRoot.getRight());
         }

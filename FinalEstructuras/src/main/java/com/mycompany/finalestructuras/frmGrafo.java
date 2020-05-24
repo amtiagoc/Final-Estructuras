@@ -17,6 +17,8 @@ import java.util.Arrays;
 public class frmGrafo extends javax.swing.JFrame {
 
     int x = 220, y = 15;
+    BinarySearchTree bst;
+    ArrayList<BinaryNode> nodes = new ArrayList<>();
 
     /**
      * Creates new form frmGrafo
@@ -27,8 +29,25 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private ArrayList<String> lista(String TotalElements) {
 
-        ArrayList<String> list = new ArrayList<>(Arrays.asList(TotalElements.split(",")));
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(TotalElements.trim().split(",")));
         return list;
+    }
+
+    private void drawLeft(Graphics g, Boolean first, String string) {
+        x += 35;
+        g.drawLine(x + 5, y + 25, x - 10, y + 40);
+
+    }
+
+    private void drawRight(Graphics g, Boolean first) {
+        x -= 35;
+        g.drawLine(x + 25, y + 25, x + 40, y + 40); //Linea hacia hijo derecho
+    }
+
+    private void drawOval(String string, int X, int Y) {
+        Graphics g = this.getGraphics();
+        g.drawOval(X, Y, 30, 30); //Ovalo
+        g.drawString(String.valueOf(string), X + 10, Y + 20); //String
     }
 
     /**
@@ -92,21 +111,27 @@ public class frmGrafo extends javax.swing.JFrame {
         Graphics g = this.getGraphics();
         int i = 1;
         for (String string : lista(jTextField1.getText())) {
-            i++;
+           /* i++;
             y += 35;
             if (i % 2 == 0) {
-                x += 35;
-                g.drawLine(x + 5, y + 25, x - 10, y + 40); //Linea hacia hijo izq
+                drawLeft(g, i == 2, string);
 
             } else {
-                x -= 35;
-                g.drawLine(x + 25, y + 25, x + 40, y + 40); //Linea hacia hijo derecho
+                drawRight(g, i == 2);
             }
-            g.drawOval(x, y, 30, 30); //Ovalo
-            g.drawString(String.valueOf(string), x + 10, y + 20); //String
 
+            drawOval(string, x, y);*/
+            bst.Add(Integer.valueOf(string));
         }
+        nodes = bst.InOrden();
+        drawNodes();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    void drawNodes() {
+        for (BinaryNode node : nodes) {
+            // drawOval(String.valueOf(node.getData()), node.getX(), node.getY());
+        }
+    }
 
     /**
      * @param args the command line arguments
