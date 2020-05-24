@@ -57,6 +57,8 @@ public class BinaryNode {
         setData(data);
         setLeft(null);
         setRight(null);
+        setX(X);
+        setY(Y);
     }
 
     public boolean isLeaf() {

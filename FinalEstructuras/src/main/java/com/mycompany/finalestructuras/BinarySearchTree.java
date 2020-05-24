@@ -49,6 +49,8 @@ public class BinarySearchTree extends frmGrafo {
                 InOrden(currentRoot.getLeft(), m);
                 list.add(currentRoot);
                 System.out.print(currentRoot.getData() + " ");
+                System.out.print(currentRoot.getX() + " ");
+                System.out.println(currentRoot.getY());
                 InOrden(currentRoot.getRight(), m);
             }
 
@@ -94,7 +96,7 @@ public class BinarySearchTree extends frmGrafo {
 
     public void Add(int data) {
         if (root == null) {
-            root = new BinaryNode(data, 220, 15);
+            root = new BinaryNode(data, 220, 60);
         } else //validar si el dato ya existe
         if (Search(data) != null) {
             System.out.println("Dato repetido, no se puede insertar");
@@ -107,13 +109,13 @@ public class BinarySearchTree extends frmGrafo {
     private void Add(int data, BinaryNode currentRoot) {
         if (data < currentRoot.getData()) {
             if (currentRoot.getLeft() == null) {
-                currentRoot.setLeft(new BinaryNode(data, currentRoot.getX() + 35, currentRoot.getY() + 35));
+                currentRoot.setLeft(new BinaryNode(data, currentRoot.getX() - 35, currentRoot.getY() + 35));
             } else {
                 Add(data, currentRoot.getLeft());
             }
 
         } else if (currentRoot.getRight() == null) {
-            currentRoot.setRight(new BinaryNode(data, currentRoot.getX() - 35, currentRoot.getY() + 35));
+            currentRoot.setRight(new BinaryNode(data, currentRoot.getX() + 35, currentRoot.getY() + 35));
         } else {
             Add(data, currentRoot.getRight());
         }

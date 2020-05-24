@@ -17,8 +17,9 @@ import java.util.Arrays;
 public class frmGrafo extends javax.swing.JFrame {
 
     int x = 220, y = 15;
-    BinarySearchTree bst;
     ArrayList<BinaryNode> nodes = new ArrayList<>();
+    BinarySearchTree bst;
+    Boolean initialized = false;
 
     /**
      * Creates new form frmGrafo
@@ -108,6 +109,11 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(!initialized){
+            bst = new BinarySearchTree();
+            initialized = true;
+        }
+        
         Graphics g = this.getGraphics();
         int i = 1;
         for (String string : lista(jTextField1.getText())) {
@@ -129,7 +135,7 @@ public class frmGrafo extends javax.swing.JFrame {
 
     void drawNodes() {
         for (BinaryNode node : nodes) {
-            // drawOval(String.valueOf(node.getData()), node.getX(), node.getY());
+            drawOval(String.valueOf(node.getData()), node.getX(), node.getY());
         }
     }
 
