@@ -16,7 +16,9 @@ import java.util.Arrays;
  */
 public class frmGrafo extends javax.swing.JFrame {
 
-    int x = 360, y = 400;
+    int x = 220, y = 15;
+    BinarySearchTree bst;
+    ArrayList<BinaryNode> nodes = new ArrayList<>();
 
     /**
      * Creates new form frmGrafo
@@ -25,10 +27,27 @@ public class frmGrafo extends javax.swing.JFrame {
         initComponents();
     }
 
-    private ArrayList<BinaryNode> lista(String TotalElements) {
+    private ArrayList<String> lista(String TotalElements) {
 
-        ArrayList<BinaryNode> list = new ArrayList<>(Arrays.asList(TotalElements.split(",")));
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(TotalElements.trim().split(",")));
         return list;
+    }
+
+    private void drawLeft(Graphics g, Boolean first, String string) {
+        x += 35;
+        g.drawLine(x + 5, y + 25, x - 10, y + 40);
+
+    }
+
+    private void drawRight(Graphics g, Boolean first) {
+        x -= 35;
+        g.drawLine(x + 25, y + 25, x + 40, y + 40); //Linea hacia hijo derecho
+    }
+
+    private void drawOval(String string, int X, int Y) {
+        Graphics g = this.getGraphics();
+        g.drawOval(X, Y, 30, 30); //Ovalo
+        g.drawString(String.valueOf(string), X + 10, Y + 20); //String
     }
 
     /**
@@ -46,6 +65,7 @@ public class frmGrafo extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -89,14 +109,29 @@ public class frmGrafo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Graphics g = this.getGraphics();
-        for (BinaryNode string : lista(jTextField1.getText())) {
-            g.drawOval(Integer.parseInt(string), 30, 30, 30);
-            g.drawString(String.valueOf(string), x + 10, 50);
-            g.drawLine(x, 90, x + 90, 30);
-            g.drawLine(x + 20, 50, x + 90, 50);
-            x += 160;
+        int i = 1;
+        for (String string : lista(jTextField1.getText())) {
+           /* i++;
+            y += 35;
+            if (i % 2 == 0) {
+                drawLeft(g, i == 2, string);
+
+            } else {
+                drawRight(g, i == 2);
+            }
+
+            drawOval(string, x, y);*/
+            bst.Add(Integer.valueOf(string));
         }
+        nodes = bst.InOrden();
+        drawNodes();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    void drawNodes() {
+        for (BinaryNode node : nodes) {
+            // drawOval(String.valueOf(node.getData()), node.getX(), node.getY());
+        }
+    }
 
     /**
      * @param args the command line arguments

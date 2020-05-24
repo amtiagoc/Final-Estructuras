@@ -11,12 +11,49 @@ package com.mycompany.finalestructuras;
  */
 public class BinaryNode {
 
+    /**
+     * @return the X
+     */
+    public int getX() {
+        return X;
+    }
+
+    /**
+     * @param X the X to set
+     */
+    public void setX(int X) {
+        this.X = X;
+    }
+
+    /**
+     * @return the Y
+     */
+    public int getY() {
+        return Y;
+    }
+
+    /**
+     * @param Y the Y to set
+     */
+    public void setY(int Y) {
+        this.Y = Y;
+    }
+
     private int data;
     private BinaryNode left;
     private BinaryNode right;
     private boolean ChildPosition;
+    private int X;
+    private int Y;
+    
 
     public BinaryNode(int data) {
+        setData(data);
+        setLeft(null);
+        setRight(null);
+    }
+    
+    public BinaryNode(int data, int X, int Y) {
         setData(data);
         setLeft(null);
         setRight(null);
