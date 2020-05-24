@@ -8,6 +8,7 @@ package com.mycompany.finalestructuras;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  *
@@ -17,7 +18,6 @@ public class frmGrafo extends javax.swing.JFrame {
 
     int x = 220, y = 15;
     ArrayList<BinaryNode> nodes = new ArrayList<>();
-    ArrayList<BinaryNode> nodesUpdated = new ArrayList<>();
     BinarySearchTree bst;
     Boolean initialized = false;
 
@@ -64,7 +64,6 @@ public class frmGrafo extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -83,24 +82,15 @@ public class frmGrafo extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Reset");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(89, Short.MAX_VALUE)
+                .addContainerGap(172, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -115,8 +105,7 @@ public class frmGrafo extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
 
@@ -139,19 +128,27 @@ public class frmGrafo extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Graphics g = this.getGraphics();
         ClearPaint(g);
+        nodes = null;
         bst.Delete(Integer.parseInt(jTextField2.getText()));
-        nodes = bst.InOrden();
-        for (BinaryNode element : nodes) {
-            bst.Add(element.getData());
+//
+//        for(int i=0;i<bst.InOrden().size();i++)
+//        {
+//        if (bst.InOrden().get(i).getData() == Integer.parseInt(jTextField2.getText())) {
+//                bst.InOrden().remove(i);
+//                break;
+//            }
+//        }
+        Iterator<BinaryNode> it = bst.InOrden().iterator();
+        while (it.hasNext()) {
+            BinaryNode node = it.next();
+            if (node.getData() == Integer.parseInt(jTextField2.getText())) {
+                it.remove();
+            }
         }
+        nodes = bst.InOrden();
+        bst.DeleteAll();
         drawNodes();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Graphics g = this.getGraphics();
-        ClearPaint(g);
-        bst.DeleteAll();
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     void drawNodes() {
         for (BinaryNode node : nodes) {
@@ -206,7 +203,6 @@ public class frmGrafo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
