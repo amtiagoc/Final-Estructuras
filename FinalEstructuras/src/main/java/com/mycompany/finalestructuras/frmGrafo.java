@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.JPanel;
 
 /**
  *
@@ -34,15 +35,15 @@ public class frmGrafo extends javax.swing.JFrame {
         return list;
     }
 
-    private void drawLeft(Graphics g, Boolean first, String string) {
-        x += 35;
-        g.drawLine(x + 5, y + 25, x - 10, y + 40);
-
+    private void drawLeft() {
+        Graphics g = this.getGraphics();
+        g.drawLine(x + 5, y - 35, x - 10, y - 20);//Linea hacia hijo izquierdo
     }
 
-    private void drawRight(Graphics g, Boolean first) {
-        x -= 35;
-        g.drawLine(x + 25, y + 25, x + 40, y + 40); //Linea hacia hijo derecho
+    private void drawRight() {
+        Graphics g = this.getGraphics();
+        x += 10;
+        g.drawLine(x + 15, y + 60, x + 40, y + 30); //Linea hacia hijo derecho
     }
 
     private void drawOval(String string, int X, int Y) {
@@ -76,6 +77,11 @@ public class frmGrafo extends javax.swing.JFrame {
         });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,15 +115,15 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(!initialized){
+        if (!initialized) {
             bst = new BinarySearchTree();
             initialized = true;
         }
-        
+
         Graphics g = this.getGraphics();
         int i = 1;
         for (String string : lista(jTextField1.getText())) {
-           /* i++;
+            /* i++;
             y += 35;
             if (i % 2 == 0) {
                 drawLeft(g, i == 2, string);
@@ -133,9 +139,31 @@ public class frmGrafo extends javax.swing.JFrame {
         drawNodes();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        bst.Delete(Integer.parseInt(jTextField2.getText()));
+        nodes = bst.InOrden();
+        if (!initialized) {
+            bst = new BinarySearchTree();
+            initialized = true;
+        }
+        Graphics g = this.getGraphics();
+        int i = 1;
+        for (BinaryNode string : nodes) {
+            bst.Add(string.getData());
+        }
+        nodes = bst.InOrden();
+        drawNodes();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     void drawNodes() {
         for (BinaryNode node : nodes) {
             drawOval(String.valueOf(node.getData()), node.getX(), node.getY());
+            if (node.getLeft() != null) {
+                drawLeft();
+            } else {
+                drawRight();
+            }
         }
     }
 
