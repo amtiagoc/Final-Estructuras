@@ -25,9 +25,9 @@ public class frmGrafo extends javax.swing.JFrame {
         initComponents();
     }
 
-    private ArrayList<String> lista(String TotalElements) {
+    private ArrayList<BinaryNode> lista(String TotalElements) {
 
-        ArrayList<String> list = new ArrayList<>(Arrays.asList(TotalElements.split(",")));
+        ArrayList<BinaryNode> list = new ArrayList<>(Arrays.asList(TotalElements.split(",")));
         return list;
     }
 
@@ -89,7 +89,7 @@ public class frmGrafo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Graphics g = this.getGraphics();
-        for (String string : lista(jTextField1.getText())) {
+        for (BinaryNode string : lista(jTextField1.getText())) {
             g.drawOval(Integer.parseInt(string), 30, 30, 30);
             g.drawString(String.valueOf(string), x + 10, 50);
             g.drawLine(x, 90, x + 90, 30);
