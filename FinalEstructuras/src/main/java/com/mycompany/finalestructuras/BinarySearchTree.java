@@ -154,6 +154,24 @@ public class BinarySearchTree extends frmGrafo {
         nodes--;
     }
 
+    public void DeleteAll() {
+        deleteAll();
+        root = null;
+        nodes = 0;
+        leafs = 0;
+    }
+
+    private void deleteAll() {
+        if(root.getLeft() != null){
+            Delete(root.getLeft().getData());
+            deleteAll();
+        }
+        if(root.getRight()!= null){
+            Delete(root.getRight().getData());
+            deleteAll();
+        }
+    }
+
     private void Delete(int data, BinaryNode currentRoot) {
 
         BinaryNode v = Search(data);
