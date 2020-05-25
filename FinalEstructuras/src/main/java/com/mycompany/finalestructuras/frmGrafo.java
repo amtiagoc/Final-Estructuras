@@ -9,6 +9,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +22,7 @@ public class frmGrafo extends javax.swing.JFrame {
 
     int x = 220, y = 15;
     ArrayList<BinaryNode> nodes = new ArrayList<>();
+    ArrayList<String> list;
     BinarySearchTree bst;
     Boolean initialized = false;
 
@@ -30,19 +35,18 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private ArrayList<String> lista(String TotalElements) {
 
-        ArrayList<String> list = new ArrayList<>(Arrays.asList(TotalElements.trim().split(",")));
-        return list;
+        ArrayList<String> lista = new ArrayList<>(Arrays.asList(TotalElements.trim().split(",")));
+        return lista;
     }
 
-    private void drawLeft() {
+    private void drawLeft(BinaryNode node, BinaryNode leftNode) {
         Graphics g = this.getGraphics();
-        g.drawLine(x + 5, y - 35, x - 10, y - 20);//Linea hacia hijo izquierdo
+        g.drawLine(node.getX() + 5, node.getY() + 25, leftNode.getX() + 25, leftNode.getY() + 2);//Linea hacia hijo izquierdo
     }
 
-    private void drawRight() {
+    private void drawRight(BinaryNode node, BinaryNode rightNode) {
         Graphics g = this.getGraphics();
-        x += 10;
-        g.drawLine(x + 15, y + 60, x + 40, y + 30); //Linea hacia hijo derecho
+        g.drawLine(node.getX() + 25, node.getY() + 25, rightNode.getX() + 5, rightNode.getY() + 2);
     }
 
     private void drawOval(String string, int X, int Y) {
@@ -64,9 +68,10 @@ public class frmGrafo extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(1000, 500));
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -82,25 +87,39 @@ public class frmGrafo extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setLabel("Reset");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(172, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(584, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(345, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 411, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -114,54 +133,72 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+         Graphics g = this.getGraphics();
         if (!initialized) {
             bst = new BinarySearchTree();
             initialized = true;
+            list = lista(jTextField1.getText());
+            for (String string : lista(jTextField1.getText())) {
+                bst.Add(Integer.valueOf(string));
+            }
+            nodes = bst.InOrden();
+            drawNodes();
+        } else {
+
+            list.addAll(Arrays.asList(jTextField1.getText().split(",")));
+            bst = new BinarySearchTree();
+            for (String string : list) {
+                bst.Add(Integer.valueOf(string));
+            }
+            nodes = bst.InOrden();
+            ClearPaint();
+            drawNodes();
         }
-        for (String string : lista(jTextField1.getText())) {
-            bst.Add(Integer.valueOf(string));
-        }
-        nodes = bst.InOrden();
-        drawNodes();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Graphics g = this.getGraphics();
-        ClearPaint(g);
+
         nodes = null;
-        bst.Delete(Integer.parseInt(jTextField2.getText()));
-//
-//        for(int i=0;i<bst.InOrden().size();i++)
-//        {
-//        if (bst.InOrden().get(i).getData() == Integer.parseInt(jTextField2.getText())) {
-//                bst.InOrden().remove(i);
-//                break;
-//            }
-//        }
-        Iterator<BinaryNode> it = bst.InOrden().iterator();
-        while (it.hasNext()) {
-            BinaryNode node = it.next();
-            if (node.getData() == Integer.parseInt(jTextField2.getText())) {
-                it.remove();
+        if (list == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo borrar");
+        } else {
+            if (list.removeAll(Arrays.asList(jTextField2.getText().split(",")))) { 
+                ClearPaint();
+                JOptionPane.showMessageDialog(this, "Borrado");
+                bst = new BinarySearchTree();
+                for (String string : list) {
+                    bst.Add(Integer.valueOf(string));
+                }
+                nodes = bst.InOrden();
+                drawNodes();
+            } else {
+                JOptionPane.showMessageDialog(this, "Uno o varios elementos no se pudieron borrar");
             }
         }
-        nodes = bst.InOrden();
-        bst.DeleteAll();
-        drawNodes();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        initialized = false;
+        ClearPaint();
+        list = null;
+        bst = new BinarySearchTree();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     void drawNodes() {
         for (BinaryNode node : nodes) {
             drawOval(String.valueOf(node.getData()), node.getX(), node.getY());
             if (node.getLeft() != null) {
-                drawLeft();
-            } else {
-                drawRight();
+                drawLeft(node, node.getLeft());
+            } 
+            if (node.getRight() != null){
+                drawRight(node , node.getRight());
             }
         }
     }
 
-    private void ClearPaint(Graphics g) {
+    private void ClearPaint() {
+        Graphics g = this.getGraphics();
         super.paintComponents(g);
     }
 
@@ -203,6 +240,7 @@ public class frmGrafo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

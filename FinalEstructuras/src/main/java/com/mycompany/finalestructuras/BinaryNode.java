@@ -12,6 +12,20 @@ package com.mycompany.finalestructuras;
 public class BinaryNode {
 
     /**
+     * @return the upperRight
+     */
+    public int getUpperRight() {
+        return upperRight;
+    }
+
+    /**
+     * @return the upperLeft
+     */
+    public int getUpperLeft() {
+        return upperLeft;
+    }
+
+    /**
      * @return the X
      */
     public int getX() {
@@ -45,6 +59,8 @@ public class BinaryNode {
     private boolean ChildPosition;
     private int X;
     private int Y;
+    private int upperRight;
+    private int upperLeft;
     
 
     public BinaryNode(int data) {

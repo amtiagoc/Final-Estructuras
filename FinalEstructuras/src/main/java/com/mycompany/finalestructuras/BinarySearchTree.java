@@ -96,28 +96,37 @@ public class BinarySearchTree extends frmGrafo {
 
     public void Add(int data) {
         if (root == null) {
-            root = new BinaryNode(data, 220, 60);
+            root = new BinaryNode(data, 485, 60);
         } else //validar si el dato ya existe
         if (Search(data) != null) {
             System.out.println("Dato repetido, no se puede insertar");
         } else {
-            Add(data, root);
+            Add(data, root, 105);
         }
         nodes++;
     }
 
-    private void Add(int data, BinaryNode currentRoot) {
+    private void Add(int data, BinaryNode currentRoot, int x) {
         if (data < currentRoot.getData()) {
             if (currentRoot.getLeft() == null) {
-                currentRoot.setLeft(new BinaryNode(data, currentRoot.getX() - 35, currentRoot.getY() + 35));
+                currentRoot.setLeft(new BinaryNode(data, currentRoot.getX() - x, currentRoot.getY() + 45));
             } else {
-                Add(data, currentRoot.getLeft());
+                if (x < 45) {
+                    Add(data, currentRoot.getLeft(), x);
+                } else {
+                    Add(data, currentRoot.getLeft(), x - 15);
+                } 
             }
 
         } else if (currentRoot.getRight() == null) {
-            currentRoot.setRight(new BinaryNode(data, currentRoot.getX() + 35, currentRoot.getY() + 35));
+            currentRoot.setRight(new BinaryNode(data, currentRoot.getX() + x, currentRoot.getY() + 45));
         } else {
-            Add(data, currentRoot.getRight());
+            if (x < 45) {
+                Add(data, currentRoot.getRight(), x);
+            } else {
+                Add(data, currentRoot.getRight(), x - 15);
+            }
+
         }
     }
 
@@ -152,24 +161,6 @@ public class BinarySearchTree extends frmGrafo {
             Delete(data, root);
         }
         nodes--;
-    }
-
-    public void DeleteAll() {
-        deleteAll();
-        root = null;
-        nodes = 0;
-        leafs = 0;
-    }
-
-    private void deleteAll() {
-        if(root.getLeft() != null){
-            Delete(root.getLeft().getData());
-            deleteAll();
-        }
-        if(root.getRight()!= null){
-            Delete(root.getRight().getData());
-            deleteAll();
-        }
     }
 
     private void Delete(int data, BinaryNode currentRoot) {
