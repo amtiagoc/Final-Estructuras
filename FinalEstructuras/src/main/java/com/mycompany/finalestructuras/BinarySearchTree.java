@@ -7,6 +7,7 @@ package com.mycompany.finalestructuras;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -100,6 +101,7 @@ public class BinarySearchTree extends frmGrafo {
         } else //validar si el dato ya existe
         if (Search(data) != null) {
             System.out.println("Dato repetido, no se puede insertar");
+            JOptionPane.showMessageDialog(super.getComponent(0), "No se pudo agregar dato repetido");
         } else {
             Add(data, root, 105);
         }
