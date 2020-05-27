@@ -101,7 +101,7 @@ public class BinarySearchTree extends frmGrafo {
         if (Search(data) != null) {
             System.out.println("Dato repetido, no se puede insertar");
         } else {
-            Add(data, root);
+            Add(data, root,x);
         }
         nodes++;
     }
