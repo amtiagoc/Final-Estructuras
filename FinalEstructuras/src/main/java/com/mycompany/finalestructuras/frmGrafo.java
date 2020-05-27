@@ -44,123 +44,23 @@ public class frmGrafo extends javax.swing.JFrame {
     private void drawLeft(BinaryNode node, BinaryNode leftNode) {
         Graphics g = this.getGraphics();
         Random rnd = new Random();
-        switch (rnd.nextInt(7)) {
-            case (0):
-                g.setColor(Color.red);
-                break;
-            case (1):
-                g.setColor(Color.ORANGE);
-                break;
-            case (2):
-                g.setColor(Color.YELLOW);
-                break;
-            case (3):
-                g.setColor(Color.GREEN);
-                break;
-            case (4):
-                g.setColor(Color.BLUE);
-                break;
-            case (5):
-                g.setColor(Color.magenta);
-                break;
-            case (6):
-                g.setColor(Color.CYAN);
-                break;
-            case (7):
-                g.setColor(Color.PINK);
-                break;
-        }
+        g.setColor(pickColor(rnd.nextInt(8)));
         g.drawLine(node.getX() + 5, node.getY() + 25, leftNode.getX() + 25, leftNode.getY() + 2);//Linea hacia hijo izquierdo
     }
 
     private void drawRight(BinaryNode node, BinaryNode rightNode) {
         Graphics g = this.getGraphics();
         Random rnd = new Random();
-        switch (rnd.nextInt(7)) {
-            case (0):
-                g.setColor(Color.red);
-                break;
-            case (1):
-                g.setColor(Color.ORANGE);
-                break;
-            case (2):
-                g.setColor(Color.YELLOW);
-                break;
-            case (3):
-                g.setColor(Color.GREEN);
-                break;
-            case (4):
-                g.setColor(Color.BLUE);
-                break;
-            case (5):
-                g.setColor(Color.magenta);
-                break;
-            case (6):
-                g.setColor(Color.CYAN);
-                break;
-            case (7):
-                g.setColor(Color.PINK);
-                break;
-        }
+        g.setColor(pickColor(rnd.nextInt(8)));
         g.drawLine(node.getX() + 25, node.getY() + 25, rightNode.getX() + 5, rightNode.getY() + 2); //Linea hacia hijo derecho
     }
 
     private void drawOval(String string, int X, int Y) {
         Random rnd = new Random();
         Graphics g = this.getGraphics();
-        switch (rnd.nextInt(7)) {
-            case (0):
-                g.setColor(Color.red);
-                break;
-            case (1):
-                g.setColor(Color.ORANGE);
-                break;
-            case (2):
-                g.setColor(Color.YELLOW);
-                break;
-            case (3):
-                g.setColor(Color.GREEN);
-                break;
-            case (4):
-                g.setColor(Color.BLUE);
-                break;
-            case (5):
-                g.setColor(Color.magenta);
-                break;
-            case (6):
-                g.setColor(Color.CYAN);
-                break;
-            case (7):
-                g.setColor(Color.PINK);
-                break;
-        }
-            g.drawOval(X, Y, 30, 30); //Ovalo
-                switch (rnd.nextInt(7)) {
-            case (0):
-                g.setColor(Color.red);
-                break;
-            case (1):
-                g.setColor(Color.ORANGE);
-                break;
-            case (2):
-                g.setColor(Color.YELLOW);
-                break;
-            case (3):
-                g.setColor(Color.GREEN);
-                break;
-            case (4):
-                g.setColor(Color.BLUE);
-                break;
-            case (5):
-                g.setColor(Color.magenta);
-                break;
-            case (6):
-                g.setColor(Color.CYAN);
-                break;
-            case (7):
-                g.setColor(Color.PINK);
-                break;
-        }
+        g.setColor(pickColor(rnd.nextInt(8)));
+        g.drawOval(X, Y, 30, 30); //Ovalo
+        g.setColor(pickColor(rnd.nextInt(8)));
         g.drawString(String.valueOf(string), X + 10, Y + 20); //String
     }
 
@@ -390,4 +290,25 @@ public class frmGrafo extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    private Color pickColor(int nextInt) {
+        switch (nextInt) {
+            case (0):
+                return Color.red;
+            case (1):
+                return Color.ORANGE;
+            case (2):
+                return Color.YELLOW;
+            case (3):
+                return Color.GREEN;
+            case (4):
+                return Color.BLUE;
+            case (5):
+                return Color.magenta;
+            case (6):
+                return Color.CYAN;
+            default:
+                return Color.PINK;
+        }
+    }
 }
