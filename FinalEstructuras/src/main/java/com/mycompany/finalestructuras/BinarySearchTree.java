@@ -86,7 +86,7 @@ public class BinarySearchTree extends frmGrafo {
 
     //Punto 4
     public int CountNodes() {
-        return nodes;
+        return getNodes();
     }
 
     //Punto 5
@@ -100,8 +100,7 @@ public class BinarySearchTree extends frmGrafo {
             root = new BinaryNode(data, 485, 60);
         } else //validar si el dato ya existe
         if (Search(data) != null) {
-            System.out.println("Dato repetido, no se puede insertar");
-            JOptionPane.showMessageDialog(super.getComponent(0), "No se pudo agregar dato repetido");
+            System.out.println("Dato repetido");
         } else {
             Add(data, root, 105);
         }
@@ -255,5 +254,12 @@ public class BinarySearchTree extends frmGrafo {
         } else {
             return getMinor(currentRoot.getLeft());
         }
+    }
+
+    /**
+     * @return the nodes
+     */
+    public int getNodes() {
+        return nodes;
     }
 }

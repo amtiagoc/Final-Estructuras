@@ -37,18 +37,14 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private ArrayList<String> lista(String TotalElements) {
         ArrayList<String> lista = new ArrayList<>(Arrays.asList(TotalElements.trim().split(",")));
-            for (int i = 0; i < lista.size(); i++) {
-                try {
-                    Integer.parseInt(lista.get(i));
-                    if (i > 8) {
-                        lista.remove(i);
-                        jTextField1.setText("El arbol está lleno");
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "No se pudo agregar " + list.get(i));
-                    lista.remove(i);
-                }
+        for (int i = 0; i < lista.size(); i++) {
+            try {
+                Integer.parseInt(lista.get(i));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "No se pudo agregar " + list.get(i));
+                lista.remove(i);
             }
+        }
         return lista;
     }
 
@@ -188,58 +184,61 @@ public class frmGrafo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Graphics g = this.getGraphics();
-        if (!initialized) {
-            bst = new BinarySearchTree();
-            initialized = true;
-            list = lista(jTextField1.getText());
-            for (String string : list) {
-                bst.Add(Integer.valueOf(string));
-            }
-            nodes = bst.InOrden();
-            drawNodes();
+        if (jTextField1.getText().contains(",,")) {
+            JOptionPane.showMessageDialog(this, "No ponga 2 comas seguidas compa");
         } else {
-
-            list.addAll(Arrays.asList(jTextField1.getText().split(",")));
-            for (int i = 0; i < list.size(); i++) {
-                try {
-                    Integer.parseInt(list.get(i));
-                    if (i > 8) {
-                        list.remove(i);
-                        jTextField1.setText("El arbol está lleno");
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "No se pudo agregar " + list.get(i));
-                    list.remove(i);
-                }
-            }
-            bst = new BinarySearchTree();
-            for (String string : list) {
-                bst.Add(Integer.valueOf(string));
-            }
-            nodes = bst.InOrden();
-            ClearPaint();
-            drawNodes();
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        nodes = null;
-        if (list == null) {
-            JOptionPane.showMessageDialog(this, "No se pudo borrar");
-        } else {
-            if (list.removeAll(Arrays.asList(jTextField2.getText().split(",")))) {
-                ClearPaint();
-                JOptionPane.showMessageDialog(this, "Borrado");
+            Graphics g = this.getGraphics();
+            if (!initialized) {
                 bst = new BinarySearchTree();
+                initialized = true;
+                list = lista(jTextField1.getText());
                 for (String string : list) {
-                    bst.Add(Integer.valueOf(string));
+                        bst.Add(Integer.valueOf(string));
                 }
                 nodes = bst.InOrden();
                 drawNodes();
             } else {
-                JOptionPane.showMessageDialog(this, "Uno o varios elementos no se pudieron borrar");
+
+                list.addAll(Arrays.asList(jTextField1.getText().split(",")));
+                for (int i = 0; i < list.size(); i++) {
+                    try {
+                        Integer.parseInt(list.get(i));
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "No se pudo agregar " + list.get(i));
+                        list.remove(i);
+                    }
+                }
+                bst = new BinarySearchTree();
+                for (String string : list) {
+                        bst.Add(Integer.valueOf(string));
+                }
+                nodes = bst.InOrden();
+                ClearPaint();
+                drawNodes();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (jTextField2.getText().contains(",,")) {
+            JOptionPane.showMessageDialog(this, "No ponga 2 comas seguidas compa");
+        } else {
+            nodes = null;
+            if (list == null) {
+                JOptionPane.showMessageDialog(this, "No se pudo borrar");
+            } else {
+                if (list.removeAll(Arrays.asList(jTextField2.getText().split(",")))) {
+                    ClearPaint();
+                    JOptionPane.showMessageDialog(this, "Borrado");
+                    bst = new BinarySearchTree();
+                    for (String string : list) {
+                        bst.Add(Integer.valueOf(string));
+                    }
+                    nodes = bst.InOrden();
+                    drawNodes();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Uno o varios elementos no se pudieron borrar");
+                }
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
